@@ -21,7 +21,7 @@ class PublicationController extends AbstractController
     {
     }
 
-    #[Route('/feed', name: 'feed', methods: ['GET'])]
+    #[Route('/feed', name: 'feed', methods: ['GET','POST'])]
     public function findAllOrderedByDate(): Response
     {
         $publications = $this->publicationRepository->createQueryBuilder('p')
@@ -38,36 +38,26 @@ class PublicationController extends AbstractController
             ];
         }
 
+        $publication = new Publication();
+    
+        $form = $this->createFormBuilder($publication)
+            ->add('title', TextType::class, ['label' => 'Titre'])
+            ->add('text', TextareaType::class, ['label' => 'Contenu'])  
+            ->add('submit', SubmitType::class, ['label' => 'Créer Publication'])
+            ->getForm();
+    
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $publication->setDate(new \DateTime()); 
+            $this->entityManager->persist($publication);
+            $this->entityManager->flush();
+        }
+
         return $this->render('publication/feed.html.twig', [
-            'publications' => $data, 
+            'publications' => $data,
+            'form' => $form->createView(),
         ]);
     }
-    
-
-        #[Route('/feed1', name: 'feed1', methods: ['GET', 'POST'])]
-        public function createPublication(Request $request): Response
-        {
-            $publication = new Publication();
-    
-            $form = $this->createFormBuilder($publication)
-                ->add('title', TextType::class, ['label' => 'Titre'])
-                ->add('text', TextareaType::class, ['label' => 'Contenu'])  
-                ->add('submit', SubmitType::class, ['label' => 'Créer Publication'])
-                ->getForm();
-    
-            $form->handleRequest($request);
-    
-            if ($form->isSubmitted() && $form->isValid()) {
-                $publication->setDate(new \DateTime()); 
-                $this->entityManager->persist($publication);
-                $this->entityManager->flush();
-    
-                return $this->redirectToRoute('feed');
-            }
-    
-            return $this->render('publication/feed.html.twig', [
-                'form' => $form->createView(),
-            ]);
-        }
-    }
+}
     
