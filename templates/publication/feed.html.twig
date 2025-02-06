@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>The Feed</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="">
+            </head>
+    <body>
+        <header>
+            <div id="titre" class="center">
+                <a href="{{ path('feed') }}"><span>The Feed</span></a>
+                <nav>
+                    <a href="{{ path('feed1') }}">Créer une publication</a>
+                </nav>
+            </div>
+        </header>
+        <main id="the-feed-main">
+            <div id="feed">
+                {% for publication in publications %}
+                    <div class="feedy">
+                        <div class="feedy-header">
+                            <a href="">
+                                <img class="avatar" src="" alt="avatar de l'utilisateur">
+                            </a>
+                            <div class="feedy-info">
+                                <span>{{ publication.author }}</span>
+                                <span> - </span>
+                                <span>{{ publication.createdAt|date('d/m/Y') }}</span>
+                                <p>{{ publication.content }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <p>Aucune publication à afficher.</p>
+                {% endfor %}
+            </div>
+
+            <div id="new-publication">
+                <h2>Ajouter une nouvelle publication</h2>
+                {{ form_start(form, {'attr': {'id': 'feedy-new'}}) }}
+                    <fieldset>
+                        <legend>Nouveau feedy</legend>
+                        <div>
+                            {{ form_widget(form.title, {'attr': {'placeholder': 'Titre'}}) }}
+                        </div>
+                        <div>
+                            {{ form_widget(form.text, {'attr': {'placeholder': 'Qu\'avez-vous en tête?'}}) }}
+                        </div>
+                        <div>
+                            {{ form_widget(form.submit, {'attr': {'id': 'feedy-new-submit', 'value': 'Feeder!'}}) }}
+                        </div>
+                    </fieldset>
+                {{ form_rest(form) }}
+                {{ form_end(form) }}
+            </div>
+        </main>
+    </body>
+</html>
