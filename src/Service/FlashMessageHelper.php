@@ -3,7 +3,6 @@ namespace App\Service;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use symfony\HttpFoundation\Session\FlashBagAwareSessionInterface;
 
 class FlashMessageHelper implements FlashMessageHelperInterface
 {

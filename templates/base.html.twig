@@ -1,25 +1,22 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block page_title %}Mon Site{% endblock %}</title>
-
-    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-</head>
-<body>
-
-
-    {% for type, messages in app.flashes %}
-        <div class="flash-{{ type }}">
-            {% for message in messages %}
-                <p>{{ message }}</p>
-            {% endfor %}
-        </div>
-    {% endfor %}
-
-
-    {% block page_content %}{% endblock %}
-
-</body>
+	<head>
+		<title>The Feed</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+	</head>
+	<body>
+		<header>
+			<div id="titre" class="center">
+				<a href="{{ path('feed') }}">
+					<span>The Feed</span>
+				</a>
+				<nav>
+					<a href="{{ path('feed') }}">Créer une publication</a>
+					<a href="{{ path('inscription') }}">Inscription</a>
+				</nav>
+			</div>
+		</header>
+		
+	</body>
 </html>

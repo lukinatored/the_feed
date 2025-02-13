@@ -1,0 +1,237 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    padding-top: 0;
+    background-color: aliceblue;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    position: static;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: none;
+    padding: 20px 0;
+    text-align: center;
+}
+
+#titre {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+}
+
+#titre a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0 20px;
+}
+
+#titre a:hover {
+    color: #B0C4DE;
+}
+
+nav {
+    margin-top: 10px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 1rem;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+nav a:last-child {
+    margin-right: 0; /
+}
+
+main {
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#feed {
+    margin-top: 20px;
+    min-height: 400px;
+}
+
+.feedy {
+    background-color: white;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    transition: all 0.1s ease-out;
+}
+
+.feedy:hover {
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    cursor: pointer;
+    padding: 1%;
+    border: solid 2px black;
+}
+
+.feedy-header {
+    margin-bottom: 15px;
+    display: flex;
+}
+
+.feedy-header a {
+    margin-right: 15px;
+}
+
+.feedy-header .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.feedy-info {
+    margin-top: 10px;
+}
+
+.feedy-info span {
+    font-weight: bold;
+    color: #333;
+}
+
+.feedy-info p {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #555;
+}
+
+#new-publication {
+    margin-top: 40px;
+}
+
+fieldset {
+    border: none;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+legend {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+div {
+    margin-bottom: 15px;
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+button[type="submit"] {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button[type="submit"]:hover {
+    background-color: #2980b9;
+}
+
+#flashes-container {
+    margin-top: 20px;
+}
+
+.flashes {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.flashes-success {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.flashes-error {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.flashes-warning {
+    background-color: #f39c12;
+    color: white;
+}
+
+.flashes-info {
+    background-color: #3498db;
+    color: white;
+}
+
+.flashes ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.flashes li {
+    padding: 5px 0;
+}
+
+@media (max-width: 768px) {
+    .feedy-header {
+        text-align: left;
+    }
+
+    .feedy-header a {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .feedy-info {
+        margin-top: 10px;
+    }
+
+    nav {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    nav a {
+        display: block;
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    
+    .feedy {
+        padding: 10px;
+    }
+}
