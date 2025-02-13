@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block page_title %}The Feed{% endblock %}
+
+{% block page_content %}
+<h1>Publications</h1>
+
+<p>{{ result }}
+    {% if result == 0 %}
+        Aucune publication
+    {% elseif result == 1 %}
+        publication
+    {% else %}
+        publications
+    {% endif %}
+</p>
+
+<ul>
+    {% for publication in publications %}
+        <li>
+            <strong>{{ publication.title }}</strong>
+            <br>
+            <p>{{ publication.text }}</p>
+            <small>Publié le
+                {{ publication.createdAt }}
+                par
+                {{ publication.author }}</small>
+        </li>
+    {% endfor %}
+</ul>
+
+<h2>Créer une nouvelle publication</h2>
+
+<div id="flashes-container">
+    {% for label, messages in app.flashes %}
+        <div class="flashes flashes-{{ label }}">
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+</div>
+
+{{ form_start(form, {'id': 'feedy-new'}) }}
+<fieldset>
+    <legend>Nouveau feedy</legend>
+
+    <div>
+        {{ form_label(form.title) }}
+        {{ form_widget(form.title, {'attr': {'placeholder': 'Titre de la publication'}}) }}
+        {% for error in form.title.vars.errors %}
+            <div class="error">{{ error.message }}</div>
+        {% endfor %}
+    </div>
+
+    <div>
+        {{ form_label(form.text) }}
+        {{ form_widget(form.text, {'attr': {'placeholder': 'Qu\'avez-vous en tête ?'}}) }}
+        {% for error in form.text.vars.errors %}
+            <div class="error">{{ error.message }}</div>
+        {% endfor %}
+    </div>
+
+    <div>
+        {{ form_widget(form.submit, {'attr': {'id': 'feedy-new-submit'}}) }}
+    </div>
+</fieldset>
+
+{{ form_rest(form) }}
+{{ form_end(form) }}
+
+{% endblock %}

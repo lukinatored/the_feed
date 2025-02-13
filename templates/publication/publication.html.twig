@@ -1,0 +1,24 @@
+<div class="feedy">
+    <div class="feedy-header">
+        <a href="{{ path('feed', {'login': publication.author is not empty and publication.author != 'Auteur inconnu' ? publication.author.login : 'default'}) }}">
+            <img class="avatar"
+                 src="{% if publication.author is not empty and publication.author != 'Auteur inconnu' and publication.author.profilePicture %}
+                                {{ asset('img/utilisateurs/uploads/' ~ publication.author.profilePicture) }}
+                                {% else %}
+                                {{ asset('img/utilisateurs/anonyme.png') }}
+                                {% endif %}"
+                 alt="avatar de l'utilisateur">
+        </a>
+        <div class="feedy-info">
+            <span {% if publication.author is not empty and publication.author != 'Auteur inconnu' and publication.author.premium %}class="premium-login"{% endif %}>
+                {{ publication.author is not empty and publication.author != 'Auteur inconnu' ? publication.author.login : 'Auteur inconnu' }}
+            </span>
+            <span> - </span>
+            <span>{{ publication.createdAt|date('d/m/Y') }}</span>
+            <p>{{ publication.text }}</p>
+            {% if is_granted('PUBLICATION_DELETE', publication) %}
+            <button data-publication-id="{{ publication.id }}" class="delete-feedy">Supprimer</button>
+            {% endif %}
+        </div>
+    </div>
+</div>
