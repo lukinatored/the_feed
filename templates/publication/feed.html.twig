@@ -1,46 +1,95 @@
-<main id="the-feed-main">
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+	<head>
+		<title>publications</title>
+		
+	</head>
+	<main id="the-feed-main">
+		<div id="feed">
 			<div id="new-publication">
 				<h2>Ajouter une nouvelle publication</h2>
+
 				{{ form_start(form, {'attr': {'id': 'feedy-new'}}) }}
 				<fieldset>
 					<legend>Nouveau feedy</legend>
+
 					<div>
 						{{ form_widget(form.title, {'attr': {'placeholder': 'Titre'}}) }}
+						{% if form.title.vars.errors|length > 0 %}
+							<div class="form-errors">
+								{% for error in form.title.vars.errors %}
+									<p class="error">{{ error.message }}</p>
+								{% endfor %}
+							</div>
+						{% endif %}
 					</div>
+
 					<div>
 						{{ form_widget(form.text, {'attr': {'placeholder': 'Qu\'avez-vous en tête?'}}) }}
+                {% if form.text.vars.errors|length > 0 %}
+                    <div class="form-errors">
+                        {% for error in form.text.vars.errors %}
+                            <p class="error">{{ error.message }}</p>
+                        {% endfor %}
                     </div>
-                    <div>
-                        {{ form_widget(form.submit, {'attr': {'id': 'feedy-new-submit', 'value': 'Feeder!'}}) }}
-                    </div>
-                </fieldset>
-                {{ form_rest(form) }}
-                {{ form_end(form) }}
+                {% endif %}
             </div>
 
-			<div id="feed">
-				{% for publication in publications %}
-					<div class="feedy">
-						<div class="feedy-header">
-							<a href="">
-								<img class="avatar" src="{{ asset('uploads/avatars/9rvg67y2.bmp') }}" alt="avatar de l'utilisateur">
-							</a>
-							<div class="feedy-info">
-								<span>{{ publication.author }}</span>
-								<span>
-									-
-								</span>
-								<span>{{ publication.createdAt|date('d/m/Y') }}</span>
-								<p>{{ publication.text }}</p>
-							</div>
-						</div>
+            <div>
+                {{ form_widget(form.submit, {'attr': {'id': 'feedy-new-submit', 'value': 'Feeder!'}}) }}
+            </div>
 
-						<div class="feedy-counter">
-							<span>{{ loop.index }}</span>
-						</div>
-					</div>
-				{% else %}
-					<p>Aucune publication à afficher.</p>
-				{% endfor %}
+            {% if form.vars.errors|length > 0 %}
+                <div class="form-errors">
+                    {% for error in form.vars.errors %}
+                        <p class="error">{{ error.message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </fieldset>
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+		<h1>Mes publications :</h1>
+
+		{% for message in app.session.flashbag.get('success') %}
+			<div class="form-success">
+				<p>{{ message }}</p>
 			</div>
-		</main>
+		{% endfor %}
+
+		{% for publication in publications %}
+			<div class="feedy">
+				<div class="feedy-header">
+					<a href=""></a>
+					<div class="feedy-info">
+						<a href="">
+							<img class="avatar" src="{{ asset('uploads/avatars/anonyme.bmp') }}" alt="avatar de l'utilisateur">
+						</a>
+						<span>{{ publication.author }}</span>
+						<span>
+							-
+						</span>
+						<span>{{ publication.createdAt|date('d/m/Y') }}</span>
+						<p>{{ publication.text }}</p>
+
+					</div>
+				</div>
+				
+				<form action="{{ path('delete_publications', {'id': publication.id}) }}" method="POST" style="display:inline;">
+						<button type="submit">
+							Supprimer la publication
+						</button>
+					</form>
+
+				</div>
+			{% else %}
+				<p>Aucune publication à afficher.</p>
+			{% endfor %}
+		</div>
+
+
+	</main>
+{% endblock %}

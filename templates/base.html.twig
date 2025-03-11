@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
-		<title>The Feed</title>
+	<title>feed</title>
 		<meta charset="utf-8">
-		<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+		<link rel="stylesheet" href="{{ asset('css/test.css') }}">
+		<link rel="stylesheet" href="{{ asset('css/feed.css') }}">
 	</head>
 	<body>
 		<header>
 			<div id="titre" class="center">
-				<a href="{{ path('feed') }}">
-					<span>The Feed</span>
-				</a>
-				<nav>
-					<a href="{{ path('feed') }}">Créer une publication</a>
-					<a href="{{ path('inscription') }}">Inscription</a>
-				</nav>
+				<a href="{{ path('feed') }}">Créer une publication</a>
+				<a href="{{ path('inscription') }}">Inscription</a>
 			</div>
 		</header>
-		
+
+		<div>
+			{% block content %}{% endblock %}
+		</div>
+
+		<footer>
+				<p>-- What do you think about our project ! --</p>
+		</footer>
 	</body>
 </html>

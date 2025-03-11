@@ -1,43 +1,45 @@
 <?php
 
-// src/Entity/Publication.php
-
 namespace App\Entity;
 
-use App\Repository\PublicationRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\DBAL\Types\Types;
+
 #[ORM\Entity(repositoryClass: PublicationRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Publication
 {
-    
-    #[Assert\NotNull(message: 'Le champ ne peut pas être vide.')]
-    #[Assert\NotBlank(message: 'Le champ ne peut pas être laissé vide.')]
-    #[Assert\Length(
-        min: 4,
-        max: 200,
-        minMessage: 'Le message doit contenir au moins 4 caractères.',
-        maxMessage: 'Le message ne doit pas dépasser 200 caractères.'
-    )]
-    private ?string $message = null;
-    
-    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    
     private ?int $id = null;
 
     #[ORM\Column(type: Types::STRING, length: 255)]
+    #[Assert\NotBlank(message: 'Le titre ne peut pas être vide.')]
+    #[Assert\Length(
+        min: 3,
+        max: 255,
+        minMessage: 'Le titre doit contenir au moins {{ limit }} caractères.',
+        maxMessage: 'Le titre ne peut pas dépasser {{ limit }} caractères.'
+    )]
     private ?string $title = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $text = null;
     
+    #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'Le contenu ne peut pas être vide.')]
+    #[Assert\Length(
+        min: 5,
+        max: 5000,
+        minMessage: 'Le contenu doit contenir au moins {{ limit }} caractères.',
+        maxMessage: 'Le contenu ne peut pas dépasser {{ limit }} caractères.'
+    )]
+    private ?string $text = null;
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
+   
     public function getId(): ?int
     {
         return $this->id;
@@ -48,10 +50,9 @@ class Publication
         return $this->title;
     }
 
-    public function setTitle(string $title): static
+    public function setTitle(string $title): self
     {
         $this->title = $title;
-
         return $this;
     }
 
@@ -60,12 +61,13 @@ class Publication
         return $this->text;
     }
 
-    public function setText(string $text): static
+    public function setText(string $text): self
     {
         $this->text = $text;
-
         return $this;
     }
+
+
 
     public function getDate(): ?\DateTimeInterface
     {

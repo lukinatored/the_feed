@@ -1,0 +1,21 @@
+.form-success {
+    color: green;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 2px;
+    border: 1px solid green;
+    background-color: #e0ffe0;
+    border-radius: 5px;
+    float: right;
+}
+
+.form-errors {
+    color: white;
+    background-color: red;
+    border: 1px solid darkred;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}

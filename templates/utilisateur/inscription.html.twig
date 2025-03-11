@@ -1,38 +1,50 @@
+{% extends "base.html.twig" %}
 
- <main>
-     {{ form_start(..., {'attr': {'class': 'center basic-form'}}) }}
-         <fieldset>
-             <legend>Inscription</legend>
-             <div class="access-container">
-                 <!-- Affichage du label "Login" -->
-                 {{ form_label(...) }}
-                 <p class="help-input-form">Entre 4 et 20 caractères</p>
-                 <!-- Affichage de l'input du login -->
-                 {{ form_widget(...) }}
-             </div>
-             <div class="access-container">
-                 <!-- Affichage du label "Mot de passe" -->
-                 {{ form_label(...) }}
-             <p class="help-input-form">Entre 8 et 30 caractères, au moins une minuscule, une majuscule et un nombre</p>
-                 <!-- Affichage de l'input du mot de passe -->
-                 {{ form_widget(...) }}
-             </div>
-             <div class="access-container">
-                 <!-- Affichage du label "Adresse mail" -->
-                 {{ form_label(...) }}
-                 <!-- Affichage de l'input de l'adresse email -->
-                 {{ form_widget(...) }}
-             </div>
-             <div class="access-container">
-                 <!-- Affichage du label "Photo de profil" -->
-                 {{ form_label(...) }}
-                 <!-- Affichage de l'input de la photo de profil (required : '', car non obligatoire...) -->
-             {{ form_widget(..., {'required' : '', 'attr' : {'accept' : 'image/png, image/jpeg'}}) }}
-             </div>
-             <!-- Affichage du bouton d'envoi, contenant le texte (label) "S'inscrire" -->
-             {{ form_widget(..., {..., 'attr': {'class': 'basic-form-submit'}}) }}
-         </fieldset>
-         {{ form_rest(...) }}
-     {{ form_end(...) }}
- </main>
-    
+{% block title %}Inscription{% endblock %}
+
+{% block page_content %}
+    <main>
+        {{ form_start(form, {"attr": {"class": "center basic-form"}}) }}
+        <fieldset>
+            <legend>Inscription</legend>
+
+            <div class="access-container">
+                {{ form_label(form.login, "Login") }}
+                <p class="help-input-form">Entre 4 et 20 caractères</p>
+                {{ form_widget(form.login) }}
+                {% for error in form.login.vars.errors %}
+                    <div class="error">{{ error.message }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="access-container">
+                {{ form_label(form.plainPassword, "Mot de passe") }}
+                <p class="help-input-form">Entre 8 et 32 caractères, au moins une minuscule, une majuscule et un chiffre</p>
+                {{ form_widget(form.plainPassword) }}
+                {% for error in form.plainPassword.vars.errors %}
+                    <div class="error">{{ error.message }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="access-container">
+                {{ form_label(form.email, "Email") }}
+                {{ form_widget(form.email) }}
+                {% for error in form.email.vars.errors %}
+                    <div class="error">{{ error.message }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="access-container">
+                {{ form_label(form.profilePictureFile, "Photo de profil") }}
+                {{ form_widget(form.profilePictureFile, {"attr" : {"accept" : "image/png, image/jpeg"}}) }}
+                {% for error in form.profilePictureFile.vars.errors %}
+                    <div class="error">{{ error.message }}</div>
+                {% endfor %}
+            </div>
+
+            {{ form_widget(form.submit, {"id": "feedy-new-submit", "attr": {"placeholder": "S'inscrire", "class": "basic-form-submit"}}) }}
+        </fieldset>
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </main>
+{% endblock %}

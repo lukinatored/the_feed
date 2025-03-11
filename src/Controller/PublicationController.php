@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use App\Entity\Publication;
@@ -33,6 +32,7 @@ class PublicationController extends AbstractController
         foreach ($publications as $publication) {
             $authorName = $publication->getAuthor() ? $publication->getAuthor()->getName() : 'Auteur inconnu';
             $data[] = [
+                'id' => $publication->getId(),
                 'title' => $publication->getTitle(),
                 'text' => $publication->getText(),
                 'createdAt' => $publication->getDate()->format('Y-m-d H:i:s'),
@@ -49,18 +49,17 @@ class PublicationController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $publication->setDate(new \DateTime());
-            $entityManager->persist($publication);
-            $entityManager->flush();
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $publication->setDate(new \DateTime());
+                $entityManager->persist($publication);
+                $entityManager->flush();
 
-            $this->addFlash('success', 'Publication créée avec succès !');
-
-            return $this->redirectToRoute('feed');
-        }
-
-        if ($form->isSubmitted() && !$form->isValid()) {
-            $flashMessageHelper->addFormErrorsAsFlash($form);  
+                $this->addFlash('success', 'Publication créée avec succès !');
+                return $this->redirectToRoute('feed');
+            } else {
+                $flashMessageHelper->addFormErrorsAsFlash($form);
+            }
         }
 
         $result = count($data);
@@ -70,5 +69,21 @@ class PublicationController extends AbstractController
             'form' => $form->createView(),
             'result' => $result,
         ]);
+    }
+
+    #[Route('/publications/delete/{id}', name: 'delete_publications', methods: ['POST'])]
+    public function delete($id, PublicationRepository $publicationRepository, EntityManagerInterface $entityManager): Response
+    {
+        $publication = $publicationRepository->find($id);
+    
+        if (!$publication) {
+            throw $this->createNotFoundException('Publication non trouvée');
+        }
+    
+        $entityManager->remove($publication);
+        $entityManager->flush();
+    
+        $this->addFlash('success', 'Publication supprimée avec succès !');
+        return $this->redirectToRoute('feed');
     }
 }
